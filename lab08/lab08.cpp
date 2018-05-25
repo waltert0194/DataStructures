@@ -1,0 +1,159 @@
+/*
+ * Name: Walter Thompson
+ * Date Submitted: 3/15/17
+ * Lab Section: 1
+ * Assignment Name: lab08
+ *
+ */
+
+//The purpose of this program is to read an infix epression from the command
+//line and convert it to a postfix epression. The program then takes the 
+//postfix expression and evaluates it.
+
+#include <sstream>
+#include <stack>
+#include <limits>
+#include <string>
+#include <iostream>
+#include <list>
+using namespace std;
+
+//Function to determine the priority of operators in the 
+//infix to postfix conversion.
+int priority(string a) {
+    int temp;
+    //if (a == '(')
+        //temp = 1;
+    if (a == "*" || a == "/")
+        temp = 2;
+    else  if (a == "+" || a == "-")
+        temp = 3;
+    return temp;
+}
+
+//Funcation to evaluate the postfix expression
+double eval(double operand1, double operand2, string operation)
+{
+     double evaluate;
+     string last;
+  
+     if(operation == "+")
+     {
+         evaluate=operand1+operand2;
+     }
+     else if(operation == "-")
+     {
+         evaluate=operand1-operand2;
+     }
+     else if(operation == "*")
+     {	
+         evaluate=operand1*operand2;
+     }
+     else if(operation == "/")
+     {
+         evaluate=operand1/operand2;
+     }
+     return evaluate;
+}
+
+//Main function that reads an infix expression from the command
+//line, converts it to postfix, then evaluates.
+int main(int argc, char * argv[]) {
+ 
+    string token; //string used to traverse the infix expression
+    string in = argv[1];
+    stringstream ss(in);
+    list<string> output; //list of strings used to store the postfix expression
+    stack<string> operator_stack; //stack to handle operations
+
+    while( getline(ss, token, ' '))
+    {
+        if (token == "+" || token == "-" || token == "*" 
+                                     || token == "/") 
+        {
+            //Inserts value into the back of the list and removes it
+            //from the stack.
+            while (!operator_stack.empty() && priority(operator_stack.top())
+                                     <= priority(token)) 
+            {
+                output.push_back(operator_stack.top());
+                operator_stack.pop();
+            }
+            operator_stack.push(token);
+        } 
+        else if (token == "(")  
+        {
+            operator_stack.push(token);
+        } 
+        else if (token == ")") 
+        {
+            while (operator_stack.top() != "(") 
+            {
+                output.push_back(operator_stack.top());
+                operator_stack.pop();
+            }
+            operator_stack.pop();
+        } 
+        else 
+        {
+            output.push_back(token);
+        }
+    }
+
+    while (!operator_stack.empty()) 
+    {
+        output.push_back(operator_stack.top());
+        //output << operator_stack.top();
+        operator_stack.pop();
+    }
+    
+    //Prints the postfix expression stored in output
+    cout << "Postfix Expression: ";
+   
+    for(list<string>::iterator i=output.begin(); i !=output.end(); i++)
+    {
+       cout << *i << ' ';
+    }
+    cout << endl;
+   
+
+         double operand2;
+			double operand1;
+         string operation;
+			double evaluate;	
+			string last;
+
+    while(!output.empty())
+    {
+        //cout << "while" << endl;
+        if(output.front() >= "0")
+        {
+				//cout << "if" << endl;
+            operator_stack.push(output.front());
+			
+        } 
+        else
+        {
+            operand2=atof(operator_stack.top().c_str()); operator_stack.pop();
+            //cout << "op2 " << operand2 << endl;
+			   operand1=atof(operator_stack.top().c_str()); operator_stack.pop();
+            //cout << "op1 " << operand1 << endl;
+            operation=output.front();
+            evaluate = eval(operand1,operand2, operation);
+            last=to_string(evaluate);
+            //cout << "eval " << evaluate << endl;
+            operator_stack.push(last);
+      	}
+	      output.pop_front();
+   }
+
+
+	while(!operator_stack.empty())
+	{
+			operator_stack.pop();
+	}
+   cout << "Postfix Evaluation: ";
+   cout << evaluate << endl;            
+    
+  return 0;
+}

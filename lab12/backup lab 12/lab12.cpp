@@ -1,0 +1,185 @@
+/*
+ * Name: Walter Thompson
+ * Date Submitted: 4/???/17
+ * Lab Section: 1
+ * Assignment Name: lab12
+ *
+ */
+
+
+/*
+ * The purpose of this program is to implement a recursive 
+ * quick sort function that has a random pivot. The program 
+ * also implements a recursive merge sort function.  
+ *
+ */
+#include <iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include <string>
+#include<vector>
+#include <fstream>
+#include <sstream>
+#include <time.h>
+using namespace std;
+
+//create a randomized pivot for the quicksort function
+int partition(vector<int>& v, int first, int last)
+{
+    //random pivot equation
+    srand (time(NULL));
+    int pivotElement = v[first + (rand()%(last - first+1))];
+    int p = first;
+        
+    for(int i = first+1 ; i <= last ; i++)
+    {
+        if(v[i] <= pivotElement)
+        {
+            p++;
+            swap(v[i], v[p]);
+        }
+    }
+    
+    swap(v[p], v[first]);
+    
+    return p;
+}
+
+//recursive quick sort function that uses a random partition
+void QuickSort(vector<int>& v, int  p, int r)
+{
+	int j;
+	if(p<r)
+	{
+		j=partition(v, p, r);
+		QuickSort(v, p, j-1);
+		QuickSort(v,j+1, r);
+	}
+}
+
+//quick sort function for ease of access in main() function
+void QuickSort(vector<int>& v)
+{
+    QuickSort(v,0 , v.size()-1);
+    
+}
+
+void merge(vector<int>& a, int from, int mid, int to)
+{
+    int n = to - from + 1; // Size of the range to be merged
+    // Merge both halves into a temporary vector b
+    vector<int> b(n);
+    
+    int i1 = from;
+    // Next element to consider in the first half
+    int i2 = mid + 1;
+    // Next element to consider in the second half
+    int j = 0; // Next open position in b
+    
+    // As long as neither i1 nor i2 is past the end, move the smaller
+    // element into b
+    
+    while (i1 <= mid && i2 <= to)
+    {
+        if (a[i1] < a[i2])
+        {
+            b[j] = a[i1];
+            i1++;
+        }
+        else
+        {
+            b[j] = a[i2];
+            i2++;
+        }
+        j++;
+    }
+    
+    while (i1 <= mid)
+    {
+        b[j] = a[i1];
+        i1++;
+        j++;
+    }
+    // Copy any remaining entries of the second half
+    while (i2 <= to)
+    {
+        b[j] = a[i2];
+        i2++;
+        j++;
+    }
+    
+    // Copy back from the temporary vector
+    for (j = 0; j < n; j++)
+        a[from + j] = b[j];
+}
+
+
+//Sorts the elements in a range of a vector.
+void mergeSort(vector<int>& a, int from, int to)
+{
+    if (from == to) return;
+    int mid = (from + to) / 2;
+    // Sort the first and the second half
+    mergeSort(a, from, mid);
+    mergeSort(a, mid + 1, to);
+    merge(a, from, mid, to);
+}
+
+void mergeSort(vector<int>& a)
+{
+    mergeSort(a, 0, a.size()-1);
+    
+}
+
+int main(int argc, char *argv[])
+{
+   srand(time(NULL));
+	string values;
+	ifstream input(argv[1]);
+	vector<int> v;
+   vector<int> v2;
+	vector<int>::iterator i;
+		
+	int p; //low
+	int r; //high
+   //int mid=(p+r)/2;
+
+	for(int i=1; i< argc; i++)
+	{
+		v.push_back(atoi(argv[i]));
+		int curr = atoi(argv[i]);
+		if(curr < p)
+			p = curr;
+		int curr2 = atoi(argv[i]);
+		if(curr2 > r)
+			r = curr;
+	}
+	
+	for(i=v.begin(); i!=v.end(); i++)
+	{
+		cout << ' ' << *i;
+	}
+	cout << endl;
+
+   v2=v;
+	QuickSort(v);
+	
+	cout << "Quick Sort = ";
+	for(i=v.begin(); i!=v.end(); i++)
+	{
+		cout << ' ' << *i;
+	}
+	cout << endl;
+
+   mergeSort(v2);
+   cout << "Merge Sort = ";
+	for(i=v2.begin(); i!=v2.end(); i++)
+	{
+		cout << ' ' << *i;
+	}
+	cout << endl;
+
+	return 0;
+}
+
+

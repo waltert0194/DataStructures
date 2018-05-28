@@ -9,7 +9,7 @@ lab03 - Implementation of a vector data structure.
 
 lab04 - Linked List implementation.
 
-lab05 - 
+lab05 - Program to convert a base 10 number to any base 2-36.
 
 lab06 - 
 

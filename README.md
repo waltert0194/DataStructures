@@ -20,7 +20,7 @@ lab08 - The purpose of this program is to read an infix epression from the comma
 
 lab09 - Simulate a database using the STL map data structure.
 
-lab10 -
+lab10 - Implement serveral common set theory functions using the C++ STL.
 
 lab11 - 
 

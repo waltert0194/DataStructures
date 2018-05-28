@@ -15,7 +15,8 @@ lab06 - Implement a stack using the vector in the standard library.
 
 lab07 - Implement a queue using the list in the standard library.
 
-lab08 - The purpose of this program is to read an infix epression from the command line and convert it to a postfix epression. The          program then takes the postfix expression and evaluates it.
+lab08 - The purpose of this program is to read an infix epression from the command line and convert it to a postfix epression.
+        The program then takes the postfix expression and evaluates it.
 
 lab09 - 
 

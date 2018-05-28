@@ -13,7 +13,7 @@ lab05 - Program to convert a base 10 number to any base 2-36.
 
 lab06 - Implement a stack using the vector in the standard library.
 
-lab07 - 
+lab07 - Implement a queue using the list in the standard library.
 
 lab08 -
 

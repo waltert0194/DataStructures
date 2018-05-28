@@ -24,4 +24,4 @@ lab10 - Implement serveral common set theory functions using the C++ STL.
 
 lab11 - implement heap sort in ascending and descending order using a priority queue. This program also implements a binary search tree sort in both ascending and descending order using a multiset from the C++ STL.
 
-lab12 -
+lab12 - The purpose of this program is to implement a recursive quick sort function that has a random pivot. The program also implements a recursive merge sort function.

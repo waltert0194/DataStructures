@@ -22,6 +22,6 @@ lab09 - Simulate a database using the STL map data structure.
 
 lab10 - Implement serveral common set theory functions using the C++ STL.
 
-lab11 - 
+lab11 - implement heap sort in ascending and descending order using a priority queue. This program also implements a binary search tree sort in both ascending and descending order using a multiset from the C++ STL.
 
 lab12 -
